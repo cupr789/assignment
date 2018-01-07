@@ -56,10 +56,11 @@ public class UserServlet extends HttpServlet {
 			out.println(gs.toJson(hm));
 		}else if(cmd.equals("logout")) {
 			us.logout(req);
-			RequestDispatcher rd= req.getRequestDispatcher("/view/user/login");
-			rd.forward(req, res);
+			out.println("#about");
+			//rd.forward(req, res);
 		}else if(cmd.equals("signin")) {
 			us.signin(req);
+			System.out.println(req.getAttribute("resStr")+"            sss");
 			out.println(req.getAttribute("resStr"));
 		}else if(cmd.equals("list")) {
 			ArrayList<UserClass> userList = us.getUserList();

@@ -46,6 +46,7 @@ public class ClassServlet extends HttpServlet {
 		res.setContentType("text/html;charset=utf-8");
 		PrintWriter out =res.getWriter();
 		String uri = req.getRequestURI();
+		System.out.println("여기는 클래스 서블릿");
 		System.out.println("uri?? "+ uri);
 		String cmd = getCommand(uri);
 		System.out.println(cmd);
