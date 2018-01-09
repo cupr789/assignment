@@ -236,7 +236,7 @@ if(user==null){
       <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
         <div class="my-auto">
           <h2 class="mb-5">Class List</h2>
-<div class="container">
+	<div class="container">
 	    <div class="row">
 	    
 	        <div class="col-md-10 col-md-offset-1">
@@ -261,7 +261,7 @@ if(user==null){
 		                        <th class="text-center" data-field="ciNo,ro">강의번호</th>
 		                        <th class="text-center" data-field="ciName,txt">강의명</th>
 		                        <th class="text-center" data-field="ciDesc,txt">강의내용</th>
-		                        <th class="text-center" data-field="BTN"><em class="glyphicon glyphicon-asterisk"></em></th>
+		                        <th class="text-center" data-field="BTN">버튼</th>
 		                    </tr>  
 	                  	</thead>
 	                  	<tbody id="result_tb_class">

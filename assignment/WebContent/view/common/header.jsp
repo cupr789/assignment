@@ -23,7 +23,11 @@ if(user!=null){
 
     <!-- Custom styles for this template -->
     <link href="resources/css/resume.min.css" rel="stylesheet">
-<link rel="stylesheet" href="/ui/css/sign.css" />
+ <link rel="stylesheet" href="resources/css/sign.css" />
+<!-- <link rel="stylesheet" href="resources/css/list.css" /> -->
+<!-- <link rel="stylesheet" href="resources/css/common.css" /> -->
+
+
 
 <%-- <link rel="stylesheet" href="<%=rootPath%>/resources/ui/css/bootstrap.min.css">
 <link rel="stylesheet" href="<%=rootPath%>/resources/ui/css/bootstrap-theme.min.css">

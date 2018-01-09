@@ -36,7 +36,6 @@ $(window).ready(function(){
 		type : 'get',
 		success:function(res){
 			var list = JSON.parse(res);
-			alert(list);
 			var str = "";
 			for(var ci of list){
 				str += "<option value='" + ci.ciNo + "'>" + ci.ciName +"</option>";
@@ -83,12 +82,12 @@ $(document).ready(function(){
 var colsInfo = [];
 
 $(document).ready(function(){
-	var colList = $("#grid1 th[data-field]");
+	var colList = $("#grid2 th[data-field]");
 	for(var i=0; i<colList.length;i++){
 		// colsInfo[colsInfo.length]=colList[i]; 예전방식
 		colsInfo.push(colList[i].getAttribute("data-field"));
 	}
-	var keyCol = $("#grid1").attr("data-key");
+	var keyCol = $("#grid2").attr("data-key");
 	$.ajax({
 		url : '/class/list',
 		type : 'get',
@@ -122,7 +121,7 @@ $(document).ready(function(){
 				}
 				str+='</tr>'; 
 			}
-			$("#result_tb").html(str);
+			$("#result_tb_class").html(str);
 		},
 		error:function(xhr,status,error){
 			
