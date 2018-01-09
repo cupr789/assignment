@@ -9,6 +9,7 @@ import java.util.List;
 
 import com.iot.test.common.DBCon;
 import com.iot.test.dao.ClassDao;
+import com.iot.test.utils.DBUtil;
 import com.iot.test.vo.ClassInfo;
 import com.iot.test.vo.UserClass;
 
@@ -42,6 +43,46 @@ public class ClassDaoImpl implements ClassDao{
 		}
 
 		return classList;
+	}
+
+	@Override
+	public int deleteClass(ClassInfo ci) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DBCon.getCon();
+			String sql = "delete from class_info where cino=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, ci.getCino());
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			
+		} finally {
+			DBUtil.closeAll(null, con, ps);
+		}
+		return 0;
+	}
+
+	@Override
+	public int updateClass(ClassInfo ci) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DBCon.getCon();
+			String sql = "update class_info set ciname=?,cidesc=? where cino=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, ci.getCiname());
+			ps.setString(2, ci.getCidesc());
+			ps.setInt(3, ci.getCino());
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(null, con, ps);
+		}
+		return 0;
 	}
 
 }

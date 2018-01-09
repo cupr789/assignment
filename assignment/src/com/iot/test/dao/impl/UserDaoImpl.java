@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import com.google.gson.Gson;
 import com.iot.test.common.DBCon;
 import com.iot.test.dao.UserDao;
+import com.iot.test.utils.DBUtil;
+import com.iot.test.vo.ClassInfo;
 import com.iot.test.vo.UserClass;
 
 public class UserDaoImpl implements UserDao {
@@ -78,11 +80,42 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public int updateUser(UserClass uc) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			con = DBCon.getCon();
+			String sql ="update user_info set uiname=?,uiage=?,address=? where uino=?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, uc.getUiName());
+			ps.setInt(2, uc.getUiAge());
+			ps.setString(3, uc.getAddress());
+			ps.setInt(4, uc.getUiNo());
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeAll(null,con, ps);
+		}
 		return 0;
 	}
 
 	@Override
-	public int deleteUSer(UserClass uc) {
+	public int deleteUser(UserClass uc) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			con = DBCon.getCon();
+			String sql ="delete from user_info where uino=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, uc.getUiNo());
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeAll(null,con, ps);
+		}
 		return 0;
 	}
 
@@ -120,6 +153,25 @@ public class UserDaoImpl implements UserDao {
 		}
 
 		return null;
+	}
+
+	@Override
+	public int deleteConditionUser(ClassInfo ci) {
+		Connection con = null;
+		PreparedStatement ps = null;
+		
+		try {
+			con = DBCon.getCon();
+			String sql ="delete from user_info where cino=?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, ci.getCino());
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeAll(null,con, ps);
+		}
+		return 0;
 	}
 
 }

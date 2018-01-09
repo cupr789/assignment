@@ -1,36 +1,36 @@
 package com.iot.test.vo;
 
 public class ClassInfo {
-	private int cino;
-	private String ciname;
-	private String cidesc;
+	private int ciNo;
+	private String ciName;
+	private String ciDesc;
 
 	public int getCino() {
-		return cino;
+		return ciNo;
 	}
 
 	public void setCino(int cino) {
-		this.cino = cino;
+		this.ciNo = cino;
 	}
 
 	public String getCiname() {
-		return ciname;
+		return ciName;
 	}
 
 	public void setCiname(String ciname) {
-		this.ciname = ciname;
+		this.ciName = ciname;
 	}
 
 	public String getCidesc() {
-		return cidesc;
+		return ciDesc;
 	}
 
 	public void setCidesc(String cidesc) {
-		this.cidesc = cidesc;
+		this.ciDesc = cidesc;
 	}
 
 	@Override
 	public String toString() {
-		return "ClassInfo [cino=" + cino + ", ciname=" + ciname + ", cidesc=" + cidesc + "]";
+		return " [ciNo=" + ciNo + ", ciName=" + ciName + ", ciDesc=" + ciDesc + "]";
 	}
 }

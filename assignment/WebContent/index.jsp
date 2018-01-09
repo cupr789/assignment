@@ -47,6 +47,10 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#education">USER LIST</a>
           </li>
+          
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#skills">CLASS LIST</a>
+          </li>
         </ul>
       </div>
     </nav>
@@ -72,7 +76,7 @@ if(user==null){
 				<input class="btn btn-lg btn-primary btn-block" type="button"
 					id="loginBtn" value="Login" onclick="checkValue()" style="background-color: white; color: black; border-color: black; " >
 					
-				<a href="/user/signin" style="margin: 1em"><input class="btn btn-lg btn-primary btn-block" type="button"
+				<a href="#experience" style="margin: 1em"><input class="btn btn-lg btn-primary btn-block" type="button"
 					id="signinBtn" value="Sign In"  style="background-color: white; color: black; border-color: black;" ></a>
 			</form>
           <ul class="list-inline list-social-icons mb-0">
@@ -226,6 +230,49 @@ if(user==null){
 			</div>
 		</div>
 	</div>
+        </div>
+      </section>
+      
+      <section class="resume-section p-3 p-lg-5 d-flex flex-column" id="skills">
+        <div class="my-auto">
+          <h2 class="mb-5">Class List</h2>
+<div class="container">
+	    <div class="row">
+	    
+	        <div class="col-md-10 col-md-offset-1">
+	            <div class="panel panel-default panel-table">
+	              <div class="panel-heading">
+	                <div class="row">
+	                  <div class="col col-xs-6">
+	                    <h3 class="panel-title">Class List</h3>
+	                  </div>
+	                  <div class="col col-xs-6 text-right">
+	                  	<input type="text" class="input">
+	                    <button type="button" class="btn btn-sm btn-primary btn-create">검색</button>
+	                  </div>
+	                  
+	                  
+	                </div>
+	              </div>
+	              <div class="panel-body">
+	                <table style="table-layout: fixed;" id="grid2" data-key="ciNo" class="table table-striped table-bordered table-list">
+	                  	<thead>
+		                    <tr>
+		                        <th class="text-center" data-field="ciNo,ro">강의번호</th>
+		                        <th class="text-center" data-field="ciName,txt">강의명</th>
+		                        <th class="text-center" data-field="ciDesc,txt">강의내용</th>
+		                        <th class="text-center" data-field="BTN"><em class="glyphicon glyphicon-asterisk"></em></th>
+		                    </tr>  
+	                  	</thead>
+	                  	<tbody id="result_tb_class">
+						</tbody>
+	                </table>
+	              </div>
+	            </div>
+			</div>
+		</div>
+	</div>
+
         </div>
       </section>
 <%

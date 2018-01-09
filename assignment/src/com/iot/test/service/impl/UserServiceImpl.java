@@ -11,12 +11,15 @@ import com.google.gson.Gson;
 import com.iot.test.dao.UserDao;
 import com.iot.test.dao.impl.UserDaoImpl;
 import com.iot.test.service.UserService;
+import com.iot.test.vo.ClassInfo;
 import com.iot.test.vo.UserClass;
 
 public class UserServiceImpl implements UserService{
 	
 	private Gson gs = new Gson();
 	private UserDao ud = new UserDaoImpl(); 
+	private UserClass uc = new UserClass();
+	private ClassInfo ci = new ClassInfo();
 	@Override
 	public HashMap<String, Object> login(HttpServletRequest req) {
 		
@@ -70,6 +73,53 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public ArrayList<UserClass> getUserList() {
 		return ud.selectUserList();
+	}
+
+	@Override
+	public String deleteUser(HttpServletRequest req) {
+		int uiNo = Integer.parseInt(req.getParameter("uiNo"));
+		uc.setUiNo(uiNo);
+		int result = ud.deleteUser(uc);
+		Map<String, String> rm = new HashMap<String, String>();
+		rm.put("result", "no");
+		rm.put("msg", "삭제 실패");
+		if (result == 1) {
+			rm.put("result", "ok");
+			rm.put("msg", "삭제 성공");
+		}
+		return gs.toJson(rm);
+	}
+
+	@Override
+	public String deleteConditionUser(HttpServletRequest req) {
+		int result =0;
+		int ciNo = Integer.parseInt(req.getParameter("ciNo"));
+		System.out.println(ciNo+"          내가원하는 cino");
+		ci.setCino(ciNo);
+		result = ud.deleteConditionUser(ci);
+		Map<String, String> rm = new HashMap<String, String>();
+		rm.put("result", "no");
+		rm.put("msg", "대상유저삭제 실패");
+		if (result == 1) {
+			rm.put("result", "ok");
+			rm.put("msg", "대상유저삭제 성공");
+		}
+		return gs.toJson(rm);
+	}
+
+	@Override
+	public String updateUser(HttpServletRequest req) {
+		String param = req.getParameter("param");
+		UserClass uc = gs.fromJson(param, UserClass.class);
+		int result = ud.updateUser(uc);
+		Map<String, String> rm = new HashMap<String, String>();
+		rm.put("result", "no");
+		rm.put("msg", "수정 실패");
+		if (result == 1) {
+			rm.put("result", "ok");
+			rm.put("msg", "수정 성공");
+		}
+		return gs.toJson(rm);
 	}
 
 }

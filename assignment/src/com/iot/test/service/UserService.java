@@ -12,4 +12,7 @@ public interface UserService {
 	public void logout(HttpServletRequest req);
 	public void signin(HttpServletRequest req);
 	public ArrayList<UserClass> getUserList();
+	public String deleteUser(HttpServletRequest req);
+	public String deleteConditionUser(HttpServletRequest req);
+	public String updateUser(HttpServletRequest req);
 }

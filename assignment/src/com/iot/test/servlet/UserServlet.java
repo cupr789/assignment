@@ -69,6 +69,8 @@ public class UserServlet extends HttpServlet {
 			//rm.put("ul", userList);
 			//rm.put("cl",classList);
 			out.println(gs.toJson(userList));
+		}else if(cmd.equals("deleteCondition")) {
+			out.println(us.deleteConditionUser(req));
 		}
 	}
 }

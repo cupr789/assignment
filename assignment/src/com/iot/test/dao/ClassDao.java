@@ -6,4 +6,6 @@ import com.iot.test.vo.ClassInfo;
 
 public interface ClassDao {
 	List<ClassInfo> selectClassList();
+	int deleteClass(ClassInfo ci);
+	int updateClass(ClassInfo ci);
 }

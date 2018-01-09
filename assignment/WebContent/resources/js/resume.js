@@ -27,18 +27,20 @@
 
 })(jQuery); // End of use strict
 
+
+
+
 $(window).ready(function(){
-	alert("asdasfafdfsdf");
 	$.ajax({
 		url : '/class/list',
 		type : 'get',
 		success:function(res){
 			var list = JSON.parse(res);
+			alert(list);
 			var str = "";
 			for(var ci of list){
-				str += "<option value='" + ci.cino + "'>" + ci.ciname +"</option>";
+				str += "<option value='" + ci.ciNo + "'>" + ci.ciName +"</option>";
 			}
-			//document.getElementById("ciNo").insertAdjacentHTML("beforeend",str);
 			$("#ciNo").html(str);
 		},
 		error:function(xhr,status,error){
@@ -78,9 +80,63 @@ $(document).ready(function(){
 	
 });
 
+var colsInfo = [];
+
+$(document).ready(function(){
+	var colList = $("#grid1 th[data-field]");
+	for(var i=0; i<colList.length;i++){
+		// colsInfo[colsInfo.length]=colList[i]; 예전방식
+		colsInfo.push(colList[i].getAttribute("data-field"));
+	}
+	var keyCol = $("#grid1").attr("data-key");
+	$.ajax({
+		url : '/class/list',
+		type : 'get',
+		success:function(res){
+			var list = JSON.parse(res);
+			var str ="";
+			for(var num in list){
+				var key = list[num].ciNo;
+				str += "<tr>";
+				for(var field of colsInfo){
+					str += "<td class='text-center'>";
+					if(field=="BTN"){
+						str += '<a class="btn btn-default" onclick="updateClass('+key+')"><em class="glyphicon glyphicon-refresh"></em></a>';
+						str += '<a class="btn btn-danger" onclick="deleteClass('+key+')"><em class="glyphicon glyphicon-trash"></em></a>';
+					}
+					else{
+						var colName = field.split(",")[0];
+						var colType = field.split(",")[1];
+						if(colType=="ro"){
+							str+=list[num].ciNo;
+						}
+						else if(colName=="ciName"){
+							str+="<input type='text' class='form-control' id='"+colName+key+"' value='"+list[num].ciName+"'>";
+							
+						}
+						else if(colName=="ciDesc"){
+							str+="<input type='text' class='form-control' id='"+colName+key+"' value='"+list[num].ciDesc+"'>";
+						}
+					}
+					str+="</td>";
+				}
+				str+='</tr>'; 
+			}
+			$("#result_tb").html(str);
+		},
+		error:function(xhr,status,error){
+			
+		}
+	});
+	
+});
+
+
+
+
 
 function signin(){
-	//"uiName,uiAge,uiId,uiPwd,ciNo,address"
+	// "uiName,uiAge,uiId,uiPwd,ciNo,address"
 	var uiName = $("#uiName").val().trim();
 	var uiAge = $("#uiAge").val().trim();
 	var uiId = $("#uiId").val().trim();
@@ -97,8 +153,8 @@ function signin(){
 			var obj = JSON.parse(res);
 			alert(obj.msg);
 			if(obj.result=="ok"){
-				//location.href="/view/user/login";
-				//<a class="nav-link js-scroll-trigger" href="#experience">
+				// location.href="/view/user/login";
+				// <a class="nav-link js-scroll-trigger" href="#experience">
 				location.replace("/index.jsp");
 			}
 		},
@@ -132,7 +188,7 @@ function checkValue(){
 			var obj = JSON.parse(res);
 			if(obj.login=="ok"){
 				window.location.reload();
-				//location.href="#experience";
+				// location.href="#experience";
 			}
 		}
 	})
@@ -141,15 +197,15 @@ function checkValue(){
 function logOut(){
 	$.ajax({
 		url : '/user/logout',
-		//data : param,
+		// data : param,
 		type :'get',
 		success:function(res){
 			
 			var obj = res;
-			//if(obj=="#about"){
+			// if(obj=="#about"){
 				window.location.reload();
-				//location.href="<%=rootPath%>/index.jsp";
-			//}
+				// location.href="<%=rootPath%>/index.jsp";
+			// }
 		}
 	})
 }
