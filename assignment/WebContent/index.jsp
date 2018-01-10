@@ -285,7 +285,7 @@
 													onclick="insertClass()">입력</button></h3>
 										</div>
 										<div class="col col-xs-6 text-right">
-											<input type="text" class="input">
+											<input type="text" class="input1" id="searchClass" onkeypress="searchClass()">
 											<button type="button"
 												class="btn btn-sm btn-primary btn-create">검색</button>
 										</div>
@@ -298,7 +298,7 @@
 										class="table table-striped table-bordered table-list">
 										<thead>
 											<tr>
-												<th class="text-center" data-field="ciNo,ro">강의번호</th>
+												<th class="text-center" data-field="ciNo,ro" value="1">강의번호</th>
 												<th class="text-center" data-field="ciName,txt">강의명</th>
 												<th class="text-center" data-field="ciDesc,txt">강의내용</th>
 												<th class="text-center" data-field="BTN">버튼</th>
@@ -390,7 +390,8 @@
 									class="form-control" placeholder="강좌소개"></td>
 							</tr>
 							<tr>
-									<td colspan="2"><input
+									<td colspan="2">
+									<input
 										class="btn btn-lg btn-primary btn-block" type="button"
 										id="singnBtn1" value="INPUT" onclick="inputClass()"></td>
 							</tr>

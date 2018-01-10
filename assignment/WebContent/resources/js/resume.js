@@ -55,7 +55,7 @@ var colsInfo2 = [];
 $(document).ready(function(){
 	var colList = $("#grid1 th[data-field]");
 	for(var i=0; i<colList.length;i++){
-		//colsInfo[colsInfo.length]=colList[i]; 예전방식
+		// colsInfo[colsInfo.length]=colList[i]; 예전방식
 		colsInfo2.push(colList[i].getAttribute("data-field"));
 	}
 	var keyCol = $("#grid1").attr("data-key");
@@ -72,11 +72,16 @@ $(document).ready(function(){
 				for(var field of colsInfo2){
 					str += "<td class='text-center'>";
 					if(field=="BTN"){
-						/*<em class="glyphicon glyphicon-refresh"></em>
-						  <em class="glyphicon glyphicon-trash"></em>*/
+						/*
+						 * <em class="glyphicon glyphicon-refresh"></em>
+						 * <em class="glyphicon glyphicon-trash"></em>
+						 */
 						  
 						str += '<a class="btn btn-default" ><button style="border-radius:4px; border-style: none; background: yellowgreen; color : white" value="수정" onclick="updateUser('+key+')">수정</button><button style="border-radius:4px; border-style: none; background: red; color : white" value="삭제" onclick="deleteUser('+key+')">삭제</button></a>';
-						/*str += '<a class="btn btn-danger" onclick="deleteUser('+key+')"></a>';*/
+						/*
+						 * str += '<a class="btn btn-danger"
+						 * onclick="deleteUser('+key+')"></a>';
+						 */
 					}
 					else{
 						var colName = field.split(",")[0];
@@ -103,7 +108,7 @@ $(document).ready(function(){
 
 var colsInfo1 = [];
 
-$(document).ready(function(){
+$(document).ready(function firstClassList(){
 	var colList = $("#grid2 th[data-field]");
 	for(var i=0; i<colList.length;i++){
 		// colsInfo[colsInfo.length]=colList[i]; 예전방식
@@ -118,7 +123,7 @@ $(document).ready(function(){
 			var str ="";
 			for(var num in list){
 				var key = list[num].ciNo;
-				str += "<tr>";
+				str += "<tr id='classTr'>";
 				for(var field of colsInfo1){
 					str += "<td class='text-center'>";
 					if(field=="BTN"){
@@ -131,11 +136,11 @@ $(document).ready(function(){
 							str+=list[num].ciNo;
 						}
 						else if(colName=="ciName"){
-							str+="<input type='text' class='form-control' id='"+colName+key+"' value='"+list[num].ciName+"'>";
+							str+="<input type='text' class='form-control inclass'  id='"+colName+key+"' value='"+list[num].ciName+"'>";
 							
 						}
 						else if(colName=="ciDesc"){
-							str+="<input type='text' class='form-control' id='"+colName+key+"' value='"+list[num].ciDesc+"'>";
+							str+="<input type='text' class='form-control inclass' id='"+colName+key+"' value='"+list[num].ciDesc+"'>";
 						}
 					}
 					str+="</td>";
@@ -178,67 +183,9 @@ $(document).ready(function(){
 });
 
 
-
-
-
-
-
-
-
-
-/*var colsInfo2 = [];
-
-$(document).ready(function(){
-	var colList = $("#grid1 th[data-field]");
-	for(var i=0; i<colList.length;i++){
-		//colsInfo[colsInfo.length]=colList[i]; 예전방식
-		colsInfo2.push(colList[i].getAttribute("data-field"));
-	}
-	var keyCol = $("#grid1").attr("data-key");
-	$.ajax({
-		url : '/user/list',
-		type : 'get',
-		success:function(res){
-			var list = JSON.parse(res);
-			var str ="";
-			for(var uc of list){
-				var key = uc[keyCol];
-				str += "<tr>";
-				for(var field of colsInfo2){
-					str += "<td class='text-center'>";
-					if(field=="BTN"){
-						str += '<a class="btn btn-default" onclick="updateUser('+key+')"><em class="glyphicon glyphicon-refresh"></em></a>';
-						str += '<a class="btn btn-danger" onclick="deleteUser('+key+')"><em class="glyphicon glyphicon-trash"></em></a>';
-					}
-					else{
-						var colName = field.split(",")[0];
-						var colType = field.split(",")[1];
-						if(colType=="ro"){
-							str+=uc[colName];
-						}
-						else{
-							str+="<input type='text' class='form-control' id='"+colName+key+"' value='"+uc[colName]+"'>";					
-						}
-					}
-					str+="</td>";
-				}
-				str+='</tr>'; 
-			}
-			$("#result_tb").html(str);
-		},
-		error:function(xhr,status,error){
-			
-		}
-	});
-	
-});*/
-
 function insertUser(){ 
 	window.open("/index.jsp#insertUser","","width=500,height=800,left=700,top=150");
 }
-
-
-
 
 
 function signin(part){
@@ -304,7 +251,7 @@ function checkValue(){
 		success:function(res){
 			var obj = JSON.parse(res);
 			if(obj.login=="ok"){
-				/*location.reload();*/
+				/* location.reload(); */
 				// location.href="#experience";
 				location.replace("/index.jsp");
 			}
@@ -340,7 +287,7 @@ function deleteUser(uiNo){
 			data : param,
 			dataType: 'json',
 			success:function(res){
-			  //var obj = JSON.parse(res);
+			  // var obj = JSON.parse(res);
 			  alert(res.msg);
 			  if(res.result=='ok'){
 				  location.reload();
@@ -397,7 +344,7 @@ function deleteClass(ciNo){
 			data : param,
 			dataType: 'json',
 			success:function(res){
-			  //var obj = JSON.parse(res);
+			  // var obj = JSON.parse(res);
 			  alert(res.msg);
 			  if(res.result=="no"){
 				  var isRealDelete = confirm("이 수업을 듣는 학생들이 있어 학생을 지우고서라도 반을 삭제할래?");
@@ -505,11 +452,16 @@ function searchUser(){
 				for(var field of colsInfo2){
 					str += "<td class='text-center'>";
 					if(field=="BTN"){
-						/*<em class="glyphicon glyphicon-refresh"></em>
-						  <em class="glyphicon glyphicon-trash"></em>*/
+						/*
+						 * <em class="glyphicon glyphicon-refresh"></em>
+						 * <em class="glyphicon glyphicon-trash"></em>
+						 */
 						  
 						str += '<a class="btn btn-default" ><button style="border-radius:4px; border-style: none; background: yellowgreen; color : white" value="수정" onclick="updateUser('+key+')">수정</button><button style="border-radius:4px; border-style: none; background: red; color : white" value="삭제" onclick="deleteUser('+key+')">삭제</button></a>';
-						/*str += '<a class="btn btn-danger" onclick="deleteUser('+key+')"></a>';*/
+						/*
+						 * str += '<a class="btn btn-danger"
+						 * onclick="deleteUser('+key+')"></a>';
+						 */
 					}
 					else{
 						var colName = field.split(",")[0];
@@ -536,6 +488,63 @@ function searchUser(){
 	
 	})
 	
+}
+
+function searchClass(){
+	str += "<tr id='classTr'>";
+	
+	
+	str += "<td class='text-center'>";
+	var inputTag = $("#result_tb_class");
+
+	
+	//str+="<input type='text' class='form-control inclass'  id='"+colName+key+"' value='"+list[num].ciName+"'>";
+	var inputText = $("#searchClass").val();
+	
+	//alert(inputText+"            akadkaskdkasdkasd");
+	
+	var parentObj = window.document.getElementById("result_tb_class");
+	var childObjs = parentObj.getElementsByTagName("tr");
+	
+	var str="";
+	for(var obj of childObjs){
+		//alert(obj.innerHTML);
+		var o1 = obj.getElementsByTagName("td");
+		str += "<tr id='classTr'>";
+		for(var o1Obj of o1){
+			var html1 = o1Obj.innerHTML;
+			//alert(html1);
+			
+			if(html1.indexOf(inputText)!=-1){
+				str+= "<td class='text-center'>"+html1+"</td>";
+			}
+			
+/*			var o2 = obj.getElementsByTagName("input");
+			for(var o2Obj of o2){
+				
+				//alert(o2Obj.value);	
+				
+			}*/
+		}
+		str +="</tr>";
+				
+	}
+	inputTag.html(str);
+	
+
+//	var div2Child = div2.getElementsByTagName("div");
+
+	
+
+	/*var tbodyObj = document.getElementById("result_tb_class");
+	
+	var childrens = tbodyObj.childNodes;
+	
+	for(var children in childrens){
+		alert(childrens[children].childNodes[children].childNodes[children].childNodes[children].nodeName+"   자식노드의 자식!!");
+	}*/
+	
+	//$("#result_tb_class").html(str);
 }
 
 
