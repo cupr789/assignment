@@ -4,7 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.google.gson.Gson;
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	private UserClass uc = new UserClass();
 	private ClassInfo ci = new ClassInfo();
 	@Override
-	public HashMap<String, Object> login(HttpServletRequest req) {
+	public HashMap<String, Object> login(HttpServletRequest req, HttpServletResponse res) {
 		
 		UserClass uc = gs.fromJson(req.getParameter("param"), UserClass.class);
 		UserClass checkUc = ud.selectUser(uc.getUiId());
@@ -35,6 +37,19 @@ public class UserServiceImpl implements UserService{
 				hm.put("login", "no");
 			}
 			else {
+				System.out.println(uc.isSaveId()+"             isSaveId가 뭐야?");
+				Cookie cId = new Cookie("userId", uc.getUiId());
+				cId.setPath("/");
+				Cookie cSave = new Cookie("saveId", ""+uc.isSaveId());
+				cSave.setPath("/");
+				int maxAge=0;
+				if(uc.isSaveId()) {
+					maxAge=24*60*60;
+				}
+				cId.setMaxAge(maxAge);
+				cSave.setMaxAge(maxAge);
+				res.addCookie(cId);
+				res.addCookie(cSave);
 				HttpSession hs = req.getSession();
 				hs.setAttribute("user", checkUc);
 			}
@@ -120,6 +135,13 @@ public class UserServiceImpl implements UserService{
 			rm.put("msg", "수정 성공");
 		}
 		return gs.toJson(rm);
+	}
+
+	@Override
+	public ArrayList<UserClass> getUser(HttpServletRequest req) {
+		String inputValue = req.getParameter("param");
+		 System.out.println(ud.searchUserList(inputValue)+"            그래서 뭐ㅏ냐고");
+		return ud.searchUserList(inputValue);
 	}
 
 }

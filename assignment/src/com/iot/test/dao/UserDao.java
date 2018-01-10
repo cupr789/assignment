@@ -13,4 +13,5 @@ public interface UserDao {
 	int updateUser(UserClass uc);
 	int deleteUser(UserClass uc);
 	int deleteConditionUser(ClassInfo ci);
+	ArrayList<UserClass> searchUserList(String inputValue);
 }

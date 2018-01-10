@@ -85,4 +85,24 @@ public class ClassDaoImpl implements ClassDao{
 		return 0;
 	}
 
+	@Override
+	public int insertClass(ClassInfo ci) {
+		Connection con = null;
+		PreparedStatement ps = null;
+
+		try {
+			con = DBCon.getCon();
+			String sql = "insert into class_info(ciname,cidesc) values(?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, ci.getCiname());
+			ps.setString(2, ci.getCidesc());
+			return ps.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			DBUtil.closeAll(null, con, ps);
+		}
+		return 0;
+	}
+
 }

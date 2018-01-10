@@ -23,7 +23,7 @@ public class UserDaoImpl implements UserDao {
 		ResultSet rs = null;
 		try {
 			con = DBCon.getCon();
-			String sql = "select * from user_info ui, class_info ci where ui.cino=ci.cino";
+			String sql = "select *,date_format(uiregdate,'%Y-%m-%d') as rdate from user_info ui, class_info ci where ui.cino=ci.cino";
 			ps = con.prepareStatement(sql);
 			rs = ps.executeQuery();
 			while (rs.next()) {
@@ -37,7 +37,7 @@ public class UserDaoImpl implements UserDao {
 				uc.setUiName(rs.getString("uiname"));
 				uc.setUiNo(rs.getInt("uino"));
 				uc.setUiPwd(rs.getString("uipwd"));
-				uc.setUiRegdate(rs.getString("uiregdate"));
+				uc.setUiRegdate(rs.getString("rdate"));
 				userList.add(uc);		
 			}
 		} catch (SQLException e) {
@@ -172,6 +172,44 @@ public class UserDaoImpl implements UserDao {
 			DBUtil.closeAll(null,con, ps);
 		}
 		return 0;
+	}
+
+	@Override
+	public ArrayList<UserClass> searchUserList(String inputValue) {
+		inputValue= inputValue.substring(1, inputValue.length()-1);
+		System.out.println(inputValue+"         그래서 잘린 value는 뭐야");
+		Connection con = null;
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		ArrayList<UserClass> userList = new ArrayList<UserClass>();
+		try {
+			con = DBCon.getCon();   
+			String sql ="select *,date_format(uiregdate,'%Y-%m-%d') as rdate from user_info ui, class_info ci where ui.cino=ci.cino and ui.uiname like ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, "%"+inputValue+"%");
+			rs= ps.executeQuery();
+			
+			while (rs.next()) {
+				UserClass uc = new UserClass();
+				uc.setAddress(rs.getString("address"));
+				uc.setCiDesc(rs.getString("cidesc"));
+				uc.setCiName(rs.getString("ciname"));
+				uc.setCiNo(rs.getInt("cino"));
+				uc.setUiAge(rs.getInt("uiage"));
+				uc.setUiId(rs.getString("uiid"));
+				uc.setUiName(rs.getString("uiname"));
+				uc.setUiNo(rs.getInt("uino"));
+				uc.setUiPwd(rs.getString("uipwd"));
+				uc.setUiRegdate(rs.getString("rdate"));
+				userList.add(uc);		
+			}
+		
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			DBUtil.closeAll(rs,con, ps);
+		}
+		return userList;
 	}
 
 }

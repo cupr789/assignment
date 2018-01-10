@@ -52,7 +52,7 @@ public class UserServlet extends HttpServlet {
 		String cmd = getCommand(uri);
 		System.out.println(cmd);
 		if(cmd.equals("login")) {
-			HashMap<String, Object> hm = us.login(req);
+			HashMap<String, Object> hm = us.login(req,res);
 			out.println(gs.toJson(hm));
 		}else if(cmd.equals("logout")) {
 			us.logout(req);
@@ -64,13 +64,19 @@ public class UserServlet extends HttpServlet {
 			out.println(req.getAttribute("resStr"));
 		}else if(cmd.equals("list")) {
 			ArrayList<UserClass> userList = us.getUserList();
-			//List<ClassInfo> classList = cs.getClassList();
-			//HashMap<String , List> rm = new HashMap<String,List>();
-			//rm.put("ul", userList);
-			//rm.put("cl",classList);
 			out.println(gs.toJson(userList));
 		}else if(cmd.equals("deleteCondition")) {
 			out.println(us.deleteConditionUser(req));
+		}else if(cmd.equals("update")) {
+			out.println(us.updateUser(req));
+		}else if(cmd.equals("delete")) {
+			out.println(us.deleteUser(req));
+		}else if(cmd.equals("searchUser")) {
+			ArrayList<UserClass> searchUserList = us.getUser(req);
+			System.out.println(searchUserList);
+			out.println(gs.toJson(searchUserList));
 		}
+		
+		
 	}
 }

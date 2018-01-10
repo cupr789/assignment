@@ -8,4 +8,5 @@ public interface ClassDao {
 	List<ClassInfo> selectClassList();
 	int deleteClass(ClassInfo ci);
 	int updateClass(ClassInfo ci);
+	int insertClass(ClassInfo ci);
 }
