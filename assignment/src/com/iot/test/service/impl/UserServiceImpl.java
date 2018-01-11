@@ -115,7 +115,7 @@ public class UserServiceImpl implements UserService{
 		Map<String, String> rm = new HashMap<String, String>();
 		rm.put("result", "no");
 		rm.put("msg", "대상유저삭제 실패");
-		if (result == 1) {
+		if (result >= 1) {
 			rm.put("result", "ok");
 			rm.put("msg", "대상유저삭제 성공");
 		}

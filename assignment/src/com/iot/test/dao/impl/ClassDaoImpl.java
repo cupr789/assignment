@@ -55,7 +55,9 @@ public class ClassDaoImpl implements ClassDao{
 			String sql = "delete from class_info where cino=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, ci.getCino());
-			return ps.executeUpdate();
+			int result = ps.executeUpdate();
+			System.out.println("조건클래스 삭제결과값은?  "+result);
+			return result;
 		} catch (SQLException e) {
 			
 		} finally {
@@ -68,7 +70,6 @@ public class ClassDaoImpl implements ClassDao{
 	public int updateClass(ClassInfo ci) {
 		Connection con = null;
 		PreparedStatement ps = null;
-
 		try {
 			con = DBCon.getCon();
 			String sql = "update class_info set ciname=?,cidesc=? where cino=?";

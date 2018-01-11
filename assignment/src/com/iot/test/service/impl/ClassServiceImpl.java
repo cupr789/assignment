@@ -38,8 +38,9 @@ public class ClassServiceImpl implements ClassService{
 	}
 	@Override
 	public String updateClass(HttpServletRequest req) {
-
+		
 		String param = req.getParameter("param");
+		System.out.println(param);
 		ClassInfo ci = gs.fromJson(param, ClassInfo.class);
 		int result = cdao.updateClass(ci);
 		Map<String, String> rm = new HashMap<String, String>();

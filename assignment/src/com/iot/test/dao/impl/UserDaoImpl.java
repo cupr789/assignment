@@ -165,7 +165,9 @@ public class UserDaoImpl implements UserDao {
 			String sql ="delete from user_info where cino=?";
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, ci.getCino());
-			return ps.executeUpdate();
+			int result = ps.executeUpdate();
+			System.out.println("조건유저 삭제결과값은??   "+ result);
+			return result;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}finally {

@@ -72,16 +72,7 @@ $(document).ready(function(){
 				for(var field of colsInfo2){
 					str += "<td class='text-center'>";
 					if(field=="BTN"){
-						/*
-						 * <em class="glyphicon glyphicon-refresh"></em>
-						 * <em class="glyphicon glyphicon-trash"></em>
-						 */
-						  
 						str += '<a class="btn btn-default" ><button style="border-radius:4px; border-style: none; background: yellowgreen; color : white" value="수정" onclick="updateUser('+key+')">수정</button><button style="border-radius:4px; border-style: none; background: red; color : white" value="삭제" onclick="deleteUser('+key+')">삭제</button></a>';
-						/*
-						 * str += '<a class="btn btn-danger"
-						 * onclick="deleteUser('+key+')"></a>';
-						 */
 					}
 					else{
 						var colName = field.split(",")[0];
@@ -127,7 +118,7 @@ $(document).ready(function firstClassList(){
 				for(var field of colsInfo1){
 					str += "<td class='text-center'>";
 					if(field=="BTN"){
-						str += '<a class="btn btn-default" ><button style="border-radius:4px; border-style: none; background: yellowgreen; color : white" value="수정" onclick="updateClass('+key+')">수정</button><button style="border-radius:4px; border-style: none; background: red; color : white" value="삭제" onclick="deleteClass('+key+')">삭제</button></a>';
+						str += '<a class="btn btn-default" ><button style="border-radius:4px; border-style: none; background: yellowgreen; color : white" value="수정" onclick="updateClass('+key+')">수정</button><button style="border-radius:4px; border-style: none; background: red; color : white" value="삭제" onclick="deleteClass('+key+',0)">삭제</button></a>';
 					}
 					else{
 						var colName = field.split(",")[0];
@@ -184,7 +175,7 @@ $(document).ready(function(){
 
 
 function insertUser(){ 
-	window.open("/index.jsp#insertUser","","width=500,height=800,left=700,top=150");
+	window.open("/signin.jsp","","width=500,height=800,left=700,top=150");
 }
 
 
@@ -192,7 +183,6 @@ function signin(part){
 	if(part==0){
 		part="";
 	}
-	// "uiName,uiAge,uiId,uiPwd,ciNo,address"
 	var uiName = $("#uiName"+part).val().trim();
 	var uiAge = $("#uiAge"+part).val().trim();
 	var uiId = $("#uiId"+part).val().trim();
@@ -209,15 +199,13 @@ function signin(part){
 			var obj = JSON.parse(res);
 			alert(obj.msg);
 			if(obj.result=="ok"){
-				// location.href="/view/user/login";
-				// <a class="nav-link js-scroll-trigger" href="#experience">
 				if(part==0){
-					alert("유저가 추가되었습니다 새로고침해주세요")
+					alert("유저가 추가되었습니다.")
 					location.replace("/index.jsp");
 				}
 				else{
-					alert("유저가 추가되었습니다 새로고침해주세요")
-					location.reload(true); 
+					opener.parent.location.reload();
+					window.close();
 				}
 			}
 		},
@@ -278,7 +266,7 @@ function logOut(){
 
 
 function deleteUser(uiNo){
-	var isDelete = confirm("진짜 지우게?");
+	var isDelete = confirm("정말로 수강생을 제거하시겠습니까?");
 	var param = "uiNo="+uiNo;
 	if(isDelete){
 		$.ajax({
@@ -308,7 +296,6 @@ function updateUser(uiNo){
 	var address=$("#address"+uiNo).val().trim();
 	var param={uiNo:uiNo,uiName:uiName,uiAge:uiAge,address:address};
 	param="param="+JSON.stringify(param);
-	alert(param);
 	$.ajax({
 		url: '/user/update',
 		type: 'post',
@@ -333,9 +320,12 @@ function updateUser(uiNo){
 } 
 
 
-function deleteClass(ciNo){
+function deleteClass(ciNo,partNo){
 	var inFunctionciNo = ciNo;
-	var isDelete = confirm("진짜 지우게?");
+	var isDelete=true;
+	if(partNo==0){
+		isDelete = confirm("강의를 제거하시겠습니까?");
+	}
 	var param = "ciNo="+ciNo;
 	if(isDelete){
 		$.ajax({
@@ -345,9 +335,9 @@ function deleteClass(ciNo){
 			dataType: 'json',
 			success:function(res){
 			  // var obj = JSON.parse(res);
-			  alert(res.msg);
+				
 			  if(res.result=="no"){
-				  var isRealDelete = confirm("이 수업을 듣는 학생들이 있어 학생을 지우고서라도 반을 삭제할래?");
+				  var isRealDelete = confirm("해당 강의를 수강하는 학생이 있습니다. 수강생을 지우고 계속 진행하시겠습니까?");
 				  if(isRealDelete){
 					  $.ajax({
 							url : '/user/deleteCondition',
@@ -357,8 +347,8 @@ function deleteClass(ciNo){
 							success:function(res){
 								alert(res.msg);
 								if(res.result=="ok"){
-									alert("필요한 조치를 취했고 이제 클래스를 삭제할꺼야!");
-									deleteClass(inFunctionciNo);
+									deleteClass(inFunctionciNo,1);
+									location.reload();
 								}
 							},
 					  		error:function(xhr,status,error){
@@ -384,7 +374,6 @@ function updateClass(ciNo){
 	var ciDesc=$("#ciDesc"+ciNo).val().trim();
 	var param={ciNo:ciNo,ciName:ciName,ciDesc:ciDesc};
 	param="param="+JSON.stringify(param);
-	alert(param);
 	$.ajax({
 		url: '/class/update',
 		type: 'post',
@@ -406,7 +395,7 @@ function updateClass(ciNo){
 } 
 
 function insertClass(){
-	window.open("/index.jsp#insertClass","","width=550,height=500,left=700,top=150");
+	window.open("/instclass.jsp#insertClass","","width=550,height=500,left=700,top=150");
 }
 
 function inputClass(){
@@ -414,7 +403,6 @@ function inputClass(){
 	var ciDesc=$("#ciDesc").val().trim();
 	var param={ciName:ciName,ciDesc:ciDesc};
 	param="param="+JSON.stringify(param);
-	alert(param);
 	$.ajax({
 		url: '/class/insert',
 		type: 'post',
@@ -423,7 +411,8 @@ function inputClass(){
 		success: function(res){
 			alert(res.msg);
 			if(res.result=="ok"){
-				location.reload();
+				opener.parent.location.reload();
+				window.close();
 			}
 		},
 		error: function(xhr,status,error){
@@ -452,16 +441,7 @@ function searchUser(){
 				for(var field of colsInfo2){
 					str += "<td class='text-center'>";
 					if(field=="BTN"){
-						/*
-						 * <em class="glyphicon glyphicon-refresh"></em>
-						 * <em class="glyphicon glyphicon-trash"></em>
-						 */
-						  
 						str += '<a class="btn btn-default" ><button style="border-radius:4px; border-style: none; background: yellowgreen; color : white" value="수정" onclick="updateUser('+key+')">수정</button><button style="border-radius:4px; border-style: none; background: red; color : white" value="삭제" onclick="deleteUser('+key+')">삭제</button></a>';
-						/*
-						 * str += '<a class="btn btn-danger"
-						 * onclick="deleteUser('+key+')"></a>';
-						 */
 					}
 					else{
 						var colName = field.split(",")[0];
@@ -491,60 +471,24 @@ function searchUser(){
 }
 
 function searchClass(){
-	str += "<tr id='classTr'>";
-	
-	
-	str += "<td class='text-center'>";
-	var inputTag = $("#result_tb_class");
-
-	
-	//str+="<input type='text' class='form-control inclass'  id='"+colName+key+"' value='"+list[num].ciName+"'>";
-	var inputText = $("#searchClass").val();
-	
-	//alert(inputText+"            akadkaskdkasdkasd");
-	
-	var parentObj = window.document.getElementById("result_tb_class");
-	var childObjs = parentObj.getElementsByTagName("tr");
-	
+		
+	var userInput = $("#searchClass").val();	
 	var str="";
-	for(var obj of childObjs){
-		//alert(obj.innerHTML);
-		var o1 = obj.getElementsByTagName("td");
-		str += "<tr id='classTr'>";
-		for(var o1Obj of o1){
-			var html1 = o1Obj.innerHTML;
-			//alert(html1);
-			
-			if(html1.indexOf(inputText)!=-1){
-				str+= "<td class='text-center'>"+html1+"</td>";
-			}
-			
-/*			var o2 = obj.getElementsByTagName("input");
-			for(var o2Obj of o2){
-				
-				//alert(o2Obj.value);	
-				
-			}*/
+	var cobj = $("#result_tb_class").children();
+	for(var c of cobj){
+		var inputStr = c.innerHTML+"";
+		if(inputStr.indexOf(userInput)!=-1){
+
+			str+= "<tr>"+inputStr+"</tr>";
 		}
-		str +="</tr>";
-				
+
 	}
-	inputTag.html(str);
-	
-
-//	var div2Child = div2.getElementsByTagName("div");
-
-	
-
-	/*var tbodyObj = document.getElementById("result_tb_class");
-	
-	var childrens = tbodyObj.childNodes;
-	
-	for(var children in childrens){
-		alert(childrens[children].childNodes[children].childNodes[children].childNodes[children].nodeName+"   자식노드의 자식!!");
-	}*/
-	
-	//$("#result_tb_class").html(str);
+	var deleteTbody = document.getElementById("result_tb_class");
+	deleteTbody.style.display="none";
+	$("#result_tb_class_search").html(str);
+	if(str==""){
+			$("#result_tb_class_search").html("<tr><td colspan='4' align='center'>검색결과가 없습니다.</td></tr>");
+	}
 }
 
 
