@@ -24,7 +24,6 @@ public class UserServiceImpl implements UserService{
 	private ClassInfo ci = new ClassInfo();
 	@Override
 	public HashMap<String, Object> login(HttpServletRequest req, HttpServletResponse res) {
-		
 		UserClass uc = gs.fromJson(req.getParameter("param"), UserClass.class);
 		UserClass checkUc = ud.selectUser(uc.getUiId());
 		HashMap<String, Object> hm = new HashMap<String, Object>();

@@ -22,5 +22,5 @@ if(user!=null){
     <link href="resources/vendor/simple-line-icons/css/simple-line-icons.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="resources/css/resume.min.css" rel="stylesheet">
- 	<link rel="stylesheet" href="resources/css/sign.css" />
+    <link href="/resources/css/resume.min.css" rel="stylesheet">
+ 	<link rel="/stylesheet" href="/resources/css/sign.css" />

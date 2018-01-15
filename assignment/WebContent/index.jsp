@@ -25,9 +25,7 @@
 		id="sideNav">
 		<a class="navbar-brand js-scroll-trigger" href="#page-top"> <span
 			class="d-block d-lg-none">MyClass</span> <span
-			class="d-none d-lg-block"> <img
-				class="img-fluid img-profile rounded-circle mx-auto mb-2"
-				src="img/profile.jpg" alt="">
+			class="d-none d-lg-block"> <img class="img-fluid img-profile rounded-circle mx-auto mb-2" src="/resources/img/apeach.jpg" alt="">
 		</span>
 		</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -148,16 +146,12 @@
 			id="wellcome">
 			<div class="my-auto">
 				<h2 class="mb-5"><%=user.getUiName() + loginMsg%></h2>
-
 			</div>
-
 		</section>
-
 		<%
 			}
 			if (user == null) {
 		%>
-
 		<section class="resume-section p-3 p-lg-5 d-flex flex-column"
 			id="signin">
 			<div class="my-auto">
@@ -213,14 +207,6 @@
 			}
 			if (user != null ) {
 		%>
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		<section class="resume-section p-3 p-lg-5 d-flex flex-column" id="userlist">
 			<div class="my-auto">
